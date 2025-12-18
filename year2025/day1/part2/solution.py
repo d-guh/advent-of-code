@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# Day 1: Secret Entrance, Part 2
+
 FILE = "../.input"
 
 def main():
