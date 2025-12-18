@@ -43,8 +43,6 @@ build/
 dist/
 out/
 output/
-debug/
-target/
 
 # Compiled objects / binaries
 *.o
@@ -89,4 +87,11 @@ temp
 ########################
 # Custom
 ########################
-# Project specific stuff here as needed
+# Project/language specific stuff here as needed
+# Python
+__pycache__/
+
+# Rust
+debug/
+target/
+*.pdb
