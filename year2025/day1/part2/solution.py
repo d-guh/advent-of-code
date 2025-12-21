@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 # Day 1: Secret Entrance, Part 2
 
-FILE = "../.input"
+FILE_PATH = "../.input"
 
 def main():
     position = 50
     count = 0
 
-    with open(FILE, 'r') as rotations_file:
+    with open(FILE_PATH, 'r') as rotations_file:
         for line in rotations_file:
             direction = line[0]
             value = int(line[1:])
