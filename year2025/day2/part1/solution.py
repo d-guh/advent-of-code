@@ -6,7 +6,6 @@ import csv
 FILE_PATH = "../.input"
 
 def main():
-    # invalid_ids = []  # Useful for debugging but not needed to store them all
     invalid_total = 0
 
     with open(FILE_PATH, 'r') as ids_file:
@@ -22,16 +21,15 @@ def main():
                 id_str = str(cur_id)
                 length = len(id_str)
 
-                half_length = length // 2  # Assumes even length IDs (since pattern double)
-                first_half = id_str[:half_length]
-                second_half = id_str[half_length:]
+                if length % 1 == 0:  # Only check ids that are even
+                    half_length = length // 2
+                    first_half = id_str[:half_length]
+                    second_half = id_str[half_length:]
 
-                if first_half == second_half:
-                    # invalid_ids.append(cur_id)  # Debug
-                    invalid_total += cur_id
-    
-    # print(invalid_ids)  # Debug
-    # print(sum(invalid_ids))  # Debug/Answer
+                    if first_half == second_half:
+                        # print(f"DEBUG: MATCH: {cur_id}")
+                        invalid_total += cur_id
+
     print(invalid_total)
 
 if __name__ == "__main__":
