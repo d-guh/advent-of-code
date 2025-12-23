@@ -36,7 +36,7 @@ int main() {
                 unsigned int half_length = length / 2;
                 string first_half = cur_id_str.substr(0, half_length);
                 string second_half = cur_id_str.substr(half_length, length);
-                // cout << "DEBUG: first-second: " << first_half << "-" << second_half << endl;
+                // cout << "DEBUG: first second: " << first_half << " " << second_half << endl;
 
 
                 if (first_half == second_half) {
