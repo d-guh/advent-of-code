@@ -10,12 +10,12 @@ def main():
         for bank in banks_file:
             bank = bank.strip()
             # print(f"DEBUG: bank: {bank}")
-            # Doing these operations as strings, could also be cast to int rather than later
-            first_battery = bank[-2]
-            second_battery = bank[-1]
+            # Doing these operations as ints, could also be strings, this may improve comparisons but makes concat different, also requires map in for loop
+            first_battery = int(bank[-2])
+            second_battery = int(bank[-1])
             
             # This is a sort of ugly solution, but the logic is there, will be abstraced/improved in part 2
-            for battery in bank[:-2][::-1]:  # Reverse for bubble sort type logic
+            for battery in map(int, bank[:-2][::-1]):  # Reverse for bubble sort logic
                 # print(f"DEBUG: battery: {battery}")
                 if battery >= first_battery:
                     # print(f"DEBUG: replacing first_battery {first_battery} -> {battery}")
@@ -26,9 +26,9 @@ def main():
                     second_battery = battery
                 # print("")
             
-            combined_joltage = first_battery + second_battery  # Concatenating strings, not adding numbers
+            combined_joltage = first_battery * 10 + second_battery  # Numerical form of concatenation
             # print(f"DEBUG: {bank}: {combined_joltage}")
-            total_joltage += int(combined_joltage)
+            total_joltage += combined_joltage
     print(f"Total Joltage: {total_joltage}")
 
 if __name__ == "__main__":
