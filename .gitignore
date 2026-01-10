@@ -66,6 +66,8 @@ tmp
 temp
 *.tmp
 temp.*
+.tmp.*
+.temp.*
 
 # Logs
 *.log
