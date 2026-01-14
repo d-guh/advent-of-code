@@ -33,6 +33,7 @@ def check_surrounding(x: int, y: int) -> bool:
     return (count < 4)
 
 def main():
+    global stored_diagram
     accessible_rolls = 0
 
     with open(FILE_PATH, 'r') as diagram_file:
@@ -47,8 +48,8 @@ def main():
                 if check_surrounding(x, y):
                     accessible_rolls += 1
 
-        #print_diagram(stored_diagram)
-        print(f"Total Accessible Rolls: {accessible_rolls}")
+    #print_diagram(stored_diagram)
+    print(f"Total Accessible Rolls: {accessible_rolls}")
 
 
 if __name__ == "__main__":
