@@ -4,14 +4,13 @@
 import copy
 
 FILE_PATH = "../.input"
-stored_diagram = []
 
 def print_diagram(diagram: list[list[bool]]) -> None:
     for row in diagram:
         print(''.join('@' if col else '.' for col in row))
     print('=' * len(diagram))
 
-def check_surrounding(x: int, y: int) -> bool:
+def check_surrounding(diagram: list[list[bool]], x: int, y: int) -> bool:
     # print(f"DEBUG: Checking surrounding for {x},{y}")
     count = 0
     directions = [
@@ -27,16 +26,16 @@ def check_surrounding(x: int, y: int) -> bool:
 
     for dx, dy in directions:
         nx, ny = x + dx, y + dy
-        if 0 <= nx < len(stored_diagram) and 0 <= ny < len(stored_diagram[0]):
-            # print(f"DEBUG: Position at {nx},{ny} (offset {dx}, {dy}) is {stored_diagram[ny][nx]}")
-            if stored_diagram[ny][nx]:
+        if 0 <= nx < len(diagram) and 0 <= ny < len(diagram[0]):
+            # print(f"DEBUG: Position at {nx},{ny} (offset {dx}, {dy}) is {diagram[ny][nx]}")
+            if diagram[ny][nx]:
                 count += 1
 
     return (count < 4)
 
 def main():
-    global stored_diagram
     accessible_rolls = 0
+    stored_diagram = []
 
     with open(FILE_PATH, 'r') as diagram_file:
         for line in diagram_file:
@@ -49,7 +48,7 @@ def main():
             for x, col in enumerate(row):
                 # print(f"DEBUG: {x},{y}: {stored_diagram[y][x]}")
                 if col:
-                    if check_surrounding(x, y):
+                    if check_surrounding(stored_diagram, x, y):
                         accessible_rolls += 1
                         stored_diagram[y][x] = False
 
