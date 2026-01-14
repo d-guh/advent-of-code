@@ -2,7 +2,7 @@
 # Day 4: Printing Department, Part 1
 
 FILE_PATH = "../.input"
-original_diagram = []
+stored_diagram = []
 
 def print_diagram(diagram: list[list[bool]]) -> None:
     for row in diagram:
@@ -25,9 +25,9 @@ def check_surrounding(x: int, y: int) -> bool:
 
     for dx, dy in directions:
         nx, ny = x + dx, y + dy
-        if 0 <= nx < len(original_diagram) and 0 <= ny < len(original_diagram[0]):
-            # print(f"DEBUG: Position at {nx},{ny} (offset {dx}, {dy}) is {original_diagram[ny][nx]}")
-            if original_diagram[ny][nx]:
+        if 0 <= nx < len(stored_diagram) and 0 <= ny < len(stored_diagram[0]):
+            # print(f"DEBUG: Position at {nx},{ny} (offset {dx}, {dy}) is {stored_diagram[ny][nx]}")
+            if stored_diagram[ny][nx]:
                 count += 1
 
     return (count < 4)
@@ -38,16 +38,16 @@ def main():
     with open(FILE_PATH, 'r') as diagram_file:
         for line in diagram_file:
             bool_line = [char == '@' for char in line.strip()]
-            original_diagram.append(list(bool_line))
+            stored_diagram.append(list(bool_line))
 
-        for y, row in enumerate(original_diagram):
-            for x, col in enumerate(row):
-                # print(f"DEBUG: {x},{y}: {original_diagram[y][x]}")
-                if col:
-                    if check_surrounding(x, y):
-                        accessible_rolls += 1
+    for y, row in enumerate(stored_diagram):
+        for x, col in enumerate(row):
+            # print(f"DEBUG: {x},{y}: {stored_diagram[y][x]}")
+            if col:
+                if check_surrounding(x, y):
+                    accessible_rolls += 1
 
-        print_diagram(original_diagram)
+        #print_diagram(stored_diagram)
         print(f"Total Accessible Rolls: {accessible_rolls}")
 
 
