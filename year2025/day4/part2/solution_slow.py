@@ -1,8 +1,13 @@
 #!/usr/bin/env python3
-# Day 4: Printing Department, Part 1
+# Day 4: Printing Department, Part 2
+# Unoptimized version of solution, keeps a copy of the updated diagram rather than updating in-place. 
+# This allows you to view the diagram changes as they occur. I still kept 2D of bool, so can't represent the x and highlighted @ very well.
+
+import copy
 
 FILE_PATH = "../.input"
 stored_diagram = []
+updated_diagram = []
 
 def print_diagram(diagram: list[list[bool]]) -> None:
     for row in diagram:
@@ -34,6 +39,7 @@ def check_surrounding(x: int, y: int) -> bool:
 
 def main():
     global stored_diagram
+    global updated_diagram
     accessible_rolls = 0
 
     with open(FILE_PATH, 'r') as diagram_file:
@@ -41,15 +47,27 @@ def main():
             bool_line = [char == '@' for char in line.strip()]
             stored_diagram.append(list(bool_line))
 
-    for y, row in enumerate(stored_diagram):
-        for x, col in enumerate(row):
-            # print(f"DEBUG: {x},{y}: {stored_diagram[y][x]}")
-            if col:
-                if check_surrounding(x, y):
-                    accessible_rolls += 1
+    updated_diagram = copy.deepcopy(stored_diagram)
 
-    #print_diagram(stored_diagram)
+    while True:
+        prev_accessible_rolls = accessible_rolls
+        for y, row in enumerate(stored_diagram):
+            for x, col in enumerate(row):
+                # print(f"DEBUG: {x},{y}: {stored_diagram[y][x]}")
+                if col:
+                    if check_surrounding(x, y):
+                        accessible_rolls += 1
+                        updated_diagram[y][x] = False
+
+        #print_diagram(stored_diagram)
+        #print_diagram(updated_diagram)
+
+        if accessible_rolls == prev_accessible_rolls:
+            break
+
+        stored_diagram = copy.deepcopy(updated_diagram)
     print(f"Total Accessible Rolls: {accessible_rolls}")
+
 
 if __name__ == "__main__":
     main()

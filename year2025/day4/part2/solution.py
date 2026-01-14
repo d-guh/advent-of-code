@@ -5,7 +5,6 @@ import copy
 
 FILE_PATH = "../.input"
 stored_diagram = []
-updated_diagram = []
 
 def print_diagram(diagram: list[list[bool]]) -> None:
     for row in diagram:
@@ -37,15 +36,12 @@ def check_surrounding(x: int, y: int) -> bool:
 
 def main():
     global stored_diagram
-    global updated_diagram
     accessible_rolls = 0
 
     with open(FILE_PATH, 'r') as diagram_file:
         for line in diagram_file:
             bool_line = [char == '@' for char in line.strip()]
             stored_diagram.append(list(bool_line))
-
-    updated_diagram = copy.deepcopy(stored_diagram)
 
     while True:
         prev_accessible_rolls = accessible_rolls
@@ -55,17 +51,12 @@ def main():
                 if col:
                     if check_surrounding(x, y):
                         accessible_rolls += 1
-                        updated_diagram[y][x] = False
-
-        #print_diagram(stored_diagram)
-        #print_diagram(updated_diagram)
+                        stored_diagram[y][x] = False
 
         if accessible_rolls == prev_accessible_rolls:
             break
 
-        stored_diagram = copy.deepcopy(updated_diagram)
     print(f"Total Accessible Rolls: {accessible_rolls}")
-
 
 if __name__ == "__main__":
     main()
