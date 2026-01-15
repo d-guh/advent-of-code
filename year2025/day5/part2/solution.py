@@ -26,7 +26,7 @@ def main():
         else:
             merged_ranges[-1][1] = max(merged_ranges[-1][1], cur_range[1])
 
-    # print(f"DEBUG: Combined Ranges: {merged_ranges}")
+    # print(f"DEBUG: Merged Ranges: {merged_ranges}")
 
     for start, end in merged_ranges:
         total_fresh += end - start + 1
