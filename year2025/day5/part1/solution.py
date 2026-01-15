@@ -21,14 +21,11 @@ def main():
                 ingredient_ids.append(int(line))  # Could technically make this in place rather that storing in memory
 
     for ingredient_id in ingredient_ids:
-        fresh_flag = False
         for bot, top in id_ranges:
             # print(f"DEBUG: {bot}, {ingredient_id}, {top}")
             if bot <= ingredient_id <= top:
-                fresh_flag = True
+                total_fresh += 1
                 break
-        if fresh_flag:
-            total_fresh += 1
 
     # print(f"DEBUG: {id_ranges}")
     # print(f"DEBUG: {ingredient_ids}")
