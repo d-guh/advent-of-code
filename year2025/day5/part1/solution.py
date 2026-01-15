@@ -4,7 +4,35 @@
 FILE_PATH = "../.input"
 
 def main():
-    pass
+    total_fresh = 0
+    id_ranges = []
+    ingredient_ids = []
+
+    with open(FILE_PATH, 'r') as ids_file:
+        range_flag = True  # Was debating using split here on every line and checking length of results, but this will probably translate better anyways? May also be more efficient
+        for line in ids_file:
+            line = line.strip()
+            if line == '':
+                range_flag = False
+                continue
+            if range_flag:
+                id_ranges.append(tuple(map(int, line.split('-'))))
+            else:
+                ingredient_ids.append(int(line))  # Could technically make this in place rather that storing in memory
+
+    for ingredient_id in ingredient_ids:
+        fresh_flag = False
+        for bot, top in id_ranges:
+            # print(f"DEBUG: {bot}, {ingredient_id}, {top}")
+            if bot <= ingredient_id <= top:
+                fresh_flag = True
+                break
+        if fresh_flag:
+            total_fresh += 1
+
+    # print(f"DEBUG: {id_ranges}")
+    # print(f"DEBUG: {ingredient_ids}")
+    print(f"Total Fresh IDs: {total_fresh}")
 
 if __name__ == "__main__":
     main()
