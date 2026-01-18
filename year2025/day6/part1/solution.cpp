@@ -38,7 +38,6 @@ int main() {
     size_t numCols = worksheet[0].size();
 
     for (size_t i = 0; i < numCols; i++) {
-        // I lied this is still buns, i should've transposed lol
         const string operatorSign = worksheet[numRows - 1][i];  // Last row (operator)
         unsigned long long value = (operatorSign == "+") ? 0 : 1;  // Avoid multiply by 0
 

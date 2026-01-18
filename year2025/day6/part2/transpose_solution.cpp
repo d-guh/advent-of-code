@@ -10,7 +10,7 @@
 
 using namespace std;
 
-const string FILE_PATH = "../.temp";
+const string FILE_PATH = "../.input";
 
 int main() {
     unsigned long long total = 0;
@@ -72,20 +72,37 @@ int main() {
     }
 
     // Debug for confirming collapse
-    cout << "[";
-    for (const auto& row : worksheet_collapsed) {
-        const vector<int> intVector = get<0>(row);
-        const char op = get<1>(row);
-        cout << "(";
-        for (size_t j = 0; j < intVector.size(); ++j) {
-            cout << intVector[j];
-            if (j < intVector.size() - 1) {
-                cout << ", ";
+    // cout << "[";
+    // for (const auto& row : worksheet_collapsed) {
+    //     const vector<int> intVector = get<0>(row);
+    //     const char op = get<1>(row);
+    //     cout << "(";
+    //     for (size_t j = 0; j < intVector.size(); ++j) {
+    //         cout << intVector[j];
+    //         if (j < intVector.size() - 1) {
+    //             cout << ", ";
+    //         }
+    //     }
+    //     cout << ", '" << op << "') ";
+    // }
+    // cout << "]" << endl;
+
+    for (const tuple<vector<int>, char>& equation : worksheet_collapsed) {
+        const vector<int>& ops = get<0>(equation);
+        char operator_char = get<1>(equation);
+        unsigned long long value = (operator_char == '+') ? 0 : 1;
+
+        for (int op : ops) {
+            if (operator_char == '+') {
+                value += op;
+            } else {
+                value *= op;
             }
         }
-        cout << ", '" << op << "') ";
+        total += value;
     }
-    cout << "]" << endl;
+
+    cout << "Total: " << total << endl;
 
     return 0;
 }
