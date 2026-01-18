@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-# Day 6: Trash Compactor, Part 2
+# Day 6: Trash Compactor, Part 2: Pandas edition
+import pandas as pd
+import numpy as np
 
 FILE_PATH = "../.input"
 
@@ -8,19 +10,24 @@ def main():
     worksheet = []
 
     with open(FILE_PATH, 'r') as worksheet_file:
-        worksheet = [line.rstrip('\n') for line in worksheet_file]
+        lines = worksheet_file.read().splitlines()
 
-    worksheet = list(zip(*worksheet))
-    worksheet = [col for col in worksheet if any(char != ' ' for char in col)]  # Remove empty columns
+    df = pd.DataFrame(lines, columns=['line'])
+
+    worksheet = df['line'].apply(lambda x: pd.Series(list(x))).T  # Transpose
+    worksheet.replace(' ', np.nan, inplace=True)
+    worksheet.dropna(axis=0, how='all', inplace=True)  # Drop empty cols
 
     #print(f"DEBUG:\n{worksheet}")
 
     numbers = []
     worksheet_collapsed = []
-    for col in reversed(worksheet):
-        number = ''.join(char for char in col[:-1] if char != ' ')
-        operator = col[-1].strip()
-        numbers.append(int(number))
+
+    for col in reversed(worksheet.values.tolist()):
+        number = ''.join(char for char in col[:-1] if pd.notna(char))
+        operator = col[-1].strip() if pd.notna(col[-1]) else ''
+        if number:
+            numbers.append(int(number))
         if operator:
             worksheet_collapsed.append((*numbers, operator))
             numbers.clear()
