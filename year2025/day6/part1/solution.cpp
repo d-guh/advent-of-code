@@ -24,6 +24,7 @@ int main() {
 
         worksheet.push_back(row);
     }
+    worksheet_file.close();
 
     // for (const vector<string>& equation : worksheet) {
     //     cout << "DEBUG: ";
