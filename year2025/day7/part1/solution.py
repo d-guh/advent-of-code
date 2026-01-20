@@ -14,7 +14,6 @@ def main():
 
     with open(FILE_PATH, 'r') as manifold_file:
         for line in manifold_file:
-            # Storing as string for simplicity, C++ solution will be mapped for memory/comparison efficiency
             manifold.append(list(line.strip()))
 
     #print(f"DEBUG: starting manifold:\n{'\n'.join(''.join(i) for i in manifold)}")
@@ -26,7 +25,6 @@ def main():
             break
         for j, char in enumerate(row):
             if char == TACHYON_BEAM:
-                # This will use reference/ptr vars in C++ which may be easier to read
                 if manifold[i+1][j] == EMPTY_SPACE:
                     manifold[i+1][j] = TACHYON_BEAM
                 elif manifold[i+1][j] == SPLITTER:
