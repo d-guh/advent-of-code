@@ -8,6 +8,9 @@ TACHYON_BEAM = '|'
 EMPTY_SPACE = '.'
 SPLITTER = '^'
 
+def print_manifold(manifold: list[list[int]]) -> None:
+    print(f"\n{'\n'.join(''.join(i) for i in manifold)}")
+
 def main():
     split_count = 0
     manifold = []
@@ -16,7 +19,8 @@ def main():
         for line in manifold_file:
             manifold.append(list(line.strip()))
 
-    #print(f"DEBUG: starting manifold:\n{'\n'.join(''.join(i) for i in manifold)}")
+    #print("DEBUG: starting manifold: ", end='')
+    #print_manifold(manifold)
 
     manifold[0] = [TACHYON_BEAM if c == SOURCE else c for c in manifold[0]]
     for i, row in enumerate(manifold):
@@ -34,7 +38,8 @@ def main():
                     if manifold[i+1][j+1] == EMPTY_SPACE:  # Right
                         manifold[i+1][j+1] = TACHYON_BEAM
 
-    #print(f"DEBUG: ending manifold:\n{'\n'.join(''.join(i) for i in manifold)}")
+    #print("DEBUG: ending manifold: ", end='')
+    #print_manifold(manifold)
 
     print(f"Total splits: {split_count}")
 
