@@ -44,14 +44,14 @@ int main() {
         }
     }
 
-    for (size_t i = 0; i < manifold.size() - 1; i++) {
-        for (size_t j = 0; j < manifold[i].size(); j++) {
+    for (size_t i = 0; i < manifold.size() - 1; ++i) {
+        for (size_t j = 0; j < manifold[i].size(); ++j) {
             //cout << "DEBUG: manifold[" << i << "][" << j << "]: " << manifold[i][j] << "\n";
             if (manifold[i][j] == TACHYON_BEAM) {
                 if (manifold[i+1][j] == EMPTY_SPACE) {
                     manifold[i+1][j] = TACHYON_BEAM;
                 } else if (manifold[i+1][j] == SPLITTER) {
-                    split_count++;
+                    ++split_count;
                     if (manifold[i+1][j-1] == EMPTY_SPACE) {
                         manifold[i+1][j-1] = TACHYON_BEAM;
                     }

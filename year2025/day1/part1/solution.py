@@ -15,17 +15,17 @@ def main():
             match direction:
                 case 'L':
                     position -= value
-                    # print(f"DEBUG: {line.strip()}: {position}")
+                    #print(f"DEBUG: {line.strip()}: {position}")
                 case 'R':
                     position += value
-                    # print(f"DEBUG: {line.strip()}: {position}")
+                    #print(f"DEBUG: {line.strip()}: {position}")
                 case _:
                     print(f"How did you get here? (skipping {line.strip()})")
                     continue
 
             position %= 100  # Calculates actual position
             count += (position == 0)  # Funny bool moment
-            # print(f"DEBUG: {position}")
+            #print(f"DEBUG: {position}")
 
     print(f"Final count: {count}")
 

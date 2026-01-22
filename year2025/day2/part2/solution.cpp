@@ -12,31 +12,26 @@ int main() {
     unsigned long long invalid_total = 0;
 
     ifstream ids_file(FILE_PATH);
-    if (!ids_file.is_open()) {
-        cerr << "Could not open the file!" << endl;
-        return 1;
-    }
-
     string id_range;
     while (getline(ids_file, id_range, ',')) {
-        // cout << "DEBUG: each range: " << id_range << endl;
+        //cout << "DEBUG: each range: " << id_range << endl;
         string start_id = id_range.substr(0, id_range.find("-"));
         string end_id = id_range.substr(id_range.find("-")+1, id_range.length());
-        // cout << "DEBUG: split range: " << start_id << "-" << end_id << endl;
+        //cout << "DEBUG: split range: " << start_id << "-" << end_id << endl;
         unsigned long long start_id_num = stoull(start_id);  // even unsigned long too small lol
         unsigned long long end_id_num = stoull(end_id);
-        // cout << "DEBUG: num range: " << start_id_num << "-" << end_id_num << endl;
-        for (unsigned long long cur_id = start_id_num; cur_id < end_id_num; cur_id++) {
+        //cout << "DEBUG: num range: " << start_id_num << "-" << end_id_num << endl;
+        for (unsigned long long cur_id = start_id_num; cur_id < end_id_num; ++cur_id) {
             string cur_id_str = to_string(cur_id);
             unsigned int length = cur_id_str.length();
-            // cout << "DEBUG: len: " << length << endl;
+            //cout << "DEBUG: len: " << length << endl;
             unsigned int half_length = length / 2;
 
-            for (int i = 1; i <= half_length; i++) {  // Only need to check half length
+            for (int i = 1; i <= half_length; ++i) {  // Only need to check half length
                 if (length % 1 == 0) {  // Only check if divisible by pattern length
                     string pattern = cur_id_str.substr(0, i);
                     string repeated_pattern;
-                    for (int j = 0; j < length / i; j++) {
+                    for (int j = 0; j < length / i; ++j) {
                         repeated_pattern += pattern;
                     }
                     if (repeated_pattern == cur_id_str) {

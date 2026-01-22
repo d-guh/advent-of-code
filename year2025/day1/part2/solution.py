@@ -24,7 +24,7 @@ def main():
 
                 position %= 100
                 count += (position == 0)
-            # print(f"DEBUG: {position}")
+            #print(f"DEBUG: {position}")
 
     print(f"Final count: {count}")
 

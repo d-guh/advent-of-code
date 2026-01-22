@@ -94,12 +94,12 @@ int main() {
 
     map<int, int> counts;
     for (int i = 0; i < num_boxes; ++i) {
-        counts[uf.find(i)]++;
+        ++counts[uf.find(i)];
     }
 
     vector<int> circuit_sizes;
     for (auto const& [root, size] : counts) {
-        circuit_sizes.push_back(size);
+        circuit_sizes.emplace_back(size);
     }
     sort(circuit_sizes.rbegin(), circuit_sizes.rend());  // Descending
 

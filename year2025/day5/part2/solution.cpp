@@ -33,25 +33,25 @@ int main() {
         unsigned long long first_num = stoull(first_str);
         unsigned long long second_num = stoull(second_str);
 
-        id_ranges.push_back(make_pair(first_num, second_num));
+        id_ranges.emplace_back(make_pair(first_num, second_num));
     }
 
     sort(id_ranges.begin(), id_ranges.end(), compare);
-    // for (const pair<unsigned long long, unsigned long long>& range : id_ranges) {
-    //     cout << "DEBUG: Orig Range: " << range.first << "-" << range.second << "\n";
-    // }
+    //for (const pair<unsigned long long, unsigned long long>& range : id_ranges) {
+    //    cout << "DEBUG: Orig Range: " << range.first << "-" << range.second << "\n";
+    //}
 
     for (const pair<unsigned long long, unsigned long long>& cur_range : id_ranges) {
         if ((merged_ranges.empty()) || merged_ranges.back().second < cur_range.first) {
-            merged_ranges.push_back(cur_range);
+            merged_ranges.emplace_back(cur_range);
         } else {
             merged_ranges.back().second = max(merged_ranges.back().second, cur_range.second);
         }
     }
 
-    // for (const pair<unsigned long long, unsigned long long>& range : merged_ranges) {
-    //     cout << "DEBUG: Merged Range: " << range.first << "-" << range.second << "\n";
-    // }
+    //for (const pair<unsigned long long, unsigned long long>& range : merged_ranges) {
+    //    cout << "DEBUG: Merged Range: " << range.first << "-" << range.second << "\n";
+    //}
 
     for (const pair<unsigned long long, unsigned long long>& range : merged_ranges) {
         total_fresh += range.second - range.first + 1;

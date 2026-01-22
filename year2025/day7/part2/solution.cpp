@@ -30,15 +30,15 @@ int main() {
 
     unsigned long counts[num_rows][num_cols] = {0};
 
-    for (size_t j = 0; j < num_cols; j++) {
+    for (size_t j = 0; j < num_cols; ++j) {
         if (manifold[0][j] == SOURCE) {
             counts[0][j] = 1;
             break;
         }
     }
 
-    for (size_t r = 0; r < num_rows - 1; r++) {
-        for (size_t c = 0; c < num_cols; c++) {
+    for (size_t r = 0; r < num_rows - 1; ++r) {
+        for (size_t c = 0; c < num_cols; ++c) {
             //cout << "DEBUG: manifold[" << r << "][" << c << "]: " << manifold[r][c] << "\n";
             //cout << "DEBUG: counts[" << r << "][" << c << "]: " << counts[r][c] << "\n";
             unsigned long count = counts[r][c];
@@ -57,7 +57,7 @@ int main() {
         }
     }
 
-    for (size_t j = 0; j < num_cols; j++) {
+    for (size_t j = 0; j < num_cols; ++j) {
         total_timelines += counts[num_rows-1][j];
     }
 

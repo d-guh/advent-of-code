@@ -13,11 +13,6 @@ int main() {
     int count = 0;
 
     ifstream rotations_file(FILE_PATH);
-    if (!rotations_file.is_open()) {
-        cerr << "Could not open the file!" << endl;
-        return 1;
-    }
-
     string line;
     while (getline(rotations_file, line)) {
         char direction = line[0];
@@ -26,11 +21,11 @@ int main() {
         switch (direction) {
             case 'L':
                 position -= value;
-                // cout << "DEBUG: " << line << ": " << position << endl;
+                //cout << "DEBUG: " << line << ": " << position << endl;
                 break;
             case 'R':
                 position += value;
-                // cout << "DEBUG: " << line << ": " << position << endl;
+                //cout << "DEBUG: " << line << ": " << position << endl;
                 break;
             default:
                 cout << "How did you get here? (skipping " << line << ")" << endl;
@@ -39,7 +34,7 @@ int main() {
 
         position %= 100;  // Actual position
         count += (position == 0);  // Bool trick
-        // cout << "DEBUG: " << position << endl;
+        //cout << "DEBUG: " << position << endl;
     }
 
     cout << "Final count: " << count << endl;

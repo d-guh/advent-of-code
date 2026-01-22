@@ -9,12 +9,12 @@ def main():
     invalid_total = 0
 
     with open(FILE_PATH, 'r') as ids_file:
-        idreader = csv.reader(ids_file)
-        id_ranges = next(idreader)
-        # print(f"DEBUG: all ranges: {id_ranges}")
+        id_reader = csv.reader(ids_file)
+        id_ranges = next(id_reader)
+        #print(f"DEBUG: all ranges: {id_ranges}")
         for id_range in id_ranges:
             id_range_split = id_range.split('-')
-            # print(f"DEBUG: each range: {id_range_split}")
+            #print(f"DEBUG: each range: {id_range_split}")
             start_id = id_range_split[0]
             end_id = id_range_split[1]
             for cur_id in range(int(start_id), int(end_id)+1):
@@ -25,7 +25,7 @@ def main():
                     if length % i == 0:  # Only check if divisible by pattern length
                         pattern = id_str[:i]
                         if pattern * (length // i) == id_str:  # repeat pattern as many times as possible
-                            # print(f"DEBUG: MATCH: {cur_id}")
+                            #print(f"DEBUG: MATCH: {cur_id}")
                             invalid_total += cur_id
                             break
 
