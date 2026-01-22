@@ -8,18 +8,12 @@ TACHYON_BEAM = '|'
 EMPTY_SPACE = '.'
 SPLITTER = '^'
 
-def print_manifold(manifold: list[list[int]]) -> None:
-    print(f"\n{'\n'.join(''.join(i) for i in manifold)}")
-
 def main():
     manifold = []
 
     with open(FILE_PATH, 'r') as manifold_file:
         for line in manifold_file:
             manifold.append(list(line.strip()))
-
-    #print("DEBUG: starting manifold: ", end='')
-    #print_manifold(manifold)
 
     num_rows = len(manifold)
     num_cols = len(manifold[0])
