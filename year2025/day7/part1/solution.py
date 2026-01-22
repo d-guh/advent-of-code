@@ -22,16 +22,21 @@ def main():
     #print("DEBUG: starting manifold: ", end='')
     #print_manifold(manifold)
 
-    manifold[0] = [TACHYON_BEAM if c == SOURCE else c for c in manifold[0]]
+    for j in range(num_cols):
+        if manifold[0][j] == SOURCE:
+            manifold[0][j] = TACHYON_BEAM
+            break
+
     for i, row in enumerate(manifold):
         #print(f"DEBUG: row {i:03}: {''.join(row)}")
         if i == len(manifold) - 1:
             break
         for j, char in enumerate(row):
             if char == TACHYON_BEAM:
-                if manifold[i+1][j] == EMPTY_SPACE:
+                below = manifold[i+1][j]
+                if below == EMPTY_SPACE:
                     manifold[i+1][j] = TACHYON_BEAM
-                elif manifold[i+1][j] == SPLITTER:
+                elif below == SPLITTER:
                     split_count += 1
                     if manifold[i+1][j-1] == EMPTY_SPACE:  # Left
                         manifold[i+1][j-1] = TACHYON_BEAM
