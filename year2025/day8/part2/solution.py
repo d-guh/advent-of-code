@@ -51,7 +51,7 @@ def main():
     for dist, i, j in all_pairs:
         if uf.unite(i, j):  # Some way to check that every box is in the same circuit
             final_union = (i, j)
-    #print(f"DEBUG: final_union: {final_union}: {junction_boxes[final_union[0]]}, {junction_boxes[final_union[1]]}")
+    #print(f"DEBUG: final_union: {final_union}: {junction_boxes[final_union[0]][0]} * {junction_boxes[final_union[1]][0]}")
     product = junction_boxes[final_union[0]][0] * junction_boxes[final_union[1]][0]
 
     print(f"Product: {product}")
