@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 # Day 9: Movie Theater, Part 1
 
+from itertools import combinations
+
 FILE_PATH = "../.input"
 
 def area(t1: (int, int), t2: (int, int)) -> int:
@@ -18,14 +20,12 @@ def main():
             red_tiles.append((int(x), int(y)))
 
     max_area = 0
-    num_tiles = len(red_tiles)
 
-    # Runs about the same as combinations
-    for i in range(num_tiles):
-        for j in range(i + 1, num_tiles):
-            cur_area = area(red_tiles[i], red_tiles[j])
-            #print(f"DEBUG: {red_tiles[i][0]},{red_tiles[i][1]} * {red_tiles[j][0]},{red_tiles[j][1]} = {cur_area}")
-            max_area = max(max_area, cur_area)
+    # Runs basically the same, easier to read though
+    for t1, t2 in combinations(red_tiles, 2):
+        cur_area = area(t1, t2)
+        #print(f"DEBUG: {t1[0]},{t1[1]} * {t2[0]},{t2[1]} = {cur_area}")
+        max_area = max(max_area, cur_area)
 
     print(f"Largest area: {max_area}")
 

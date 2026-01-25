@@ -41,12 +41,12 @@ int main() {
     red_tiles_file.close();
 
     unsigned long long max_area = 0;
-    // Runs about the same as indices, easier to read though
-    // Using iterators rather than indicies, skips checking self, skips reverse order repeats, still O(n^2), but less iterations
-    for (auto it1 = red_tiles.begin(); it1 != red_tiles.end(); ++it1) {
-        for (auto it2 = next(it1); it2 != red_tiles.end(); ++it2) {
-            unsigned long long cur_area = area(*it1, *it2);
-            //cout << "DEBUG: " << it1->x << "," << it1->y << " * " << it2->x << "," << it2->y << " = " << cur_area << "\n";
+    size_t num_tiles = red_tiles.size();
+    // Indices, Skips checking self, skips reverse order repeats, still O(n^2), but less iterations
+    for (size_t i = 0; i < num_tiles; ++i) {
+        for (size_t j = i + 1; j < num_tiles; ++j) {
+            unsigned long long cur_area = area(red_tiles[i], red_tiles[j]);
+            //cout << "DEBUG: " << red_tiles[i].x << "," << red_tiles[i].y << " * " << red_tiles[j].x << "," << red_tiles[j].y << " = " << cur_area << "\n";
             max_area = max(max_area, cur_area);
         }
     }
