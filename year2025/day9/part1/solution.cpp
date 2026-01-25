@@ -4,7 +4,7 @@
 #include <fstream>
 #include <string>
 #include <sstream>
-#include <set>
+#include <vector>
 #include <algorithm>
 #include <cmath>
 
@@ -14,11 +14,6 @@ static const string FILE_PATH = "../.input";
 
 struct Tile {
     long x, y;
-
-    // Needed for set, compares x, if x is same, compares y
-    bool operator<(const Tile& other) const {
-        return (x == other.x) ? y < other.y : x < other.x;
-    }
 };
 
 unsigned long long area(const Tile& t1, const Tile& t2) {
@@ -28,8 +23,8 @@ unsigned long long area(const Tile& t1, const Tile& t2) {
 }
 
 int main() {
-    // Set rather than vector, no need to store duplicates
-    set<Tile> red_tiles;
+    // Vector for O(1) insert to back, duplicates unlikely, accessing in order, not searching
+    vector<Tile> red_tiles;
 
     ifstream red_tiles_file(FILE_PATH);
     string line;
@@ -41,7 +36,7 @@ int main() {
         getline(ss, val, ','); t.x = stoul(val);
         getline(ss, val, ','); t.y = stoul(val);
 
-        red_tiles.insert(t);
+        red_tiles.emplace_back(t);
     }
     red_tiles_file.close();
 
