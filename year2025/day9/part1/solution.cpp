@@ -4,7 +4,7 @@
 #include <fstream>
 #include <string>
 #include <sstream>
-#include <vector>
+#include <set>
 #include <algorithm>
 #include <cmath>
 
@@ -14,6 +14,11 @@ static const string FILE_PATH = "../.input";
 
 struct Tile {
     long x, y;
+
+    // Needed for set, compares x, if x is same, compares y
+    bool operator<(const Tile& other) const {
+        return (x == other.x) ? y < other.y : x < other.x;
+    }
 };
 
 unsigned long long area(const Tile& t1, const Tile& t2) {
@@ -23,7 +28,8 @@ unsigned long long area(const Tile& t1, const Tile& t2) {
 }
 
 int main() {
-    vector<Tile> red_tiles;
+    // Set rather than vector, no need to store duplicates
+    set<Tile> red_tiles;
 
     ifstream red_tiles_file(FILE_PATH);
     string line;
@@ -35,19 +41,17 @@ int main() {
         getline(ss, val, ','); t.x = stoul(val);
         getline(ss, val, ','); t.y = stoul(val);
 
-        red_tiles.emplace_back(t);
+        red_tiles.insert(t);
     }
     red_tiles_file.close();
 
-    size_t num_tiles = red_tiles.size();
     unsigned long long max_area = 0;
-    for (size_t i = 0; i < num_tiles; ++i) {
-        for (size_t j = 0; j < num_tiles; ++j) {
-            unsigned long long cur_area = area(red_tiles[i], red_tiles[j]);
-            //cout << "DEBUG: " << red_tiles[i].x << "," << red_tiles[i].y << " * " << red_tiles[j].x << "," << red_tiles[j].y << " = " << cur_area << "\n";
-            if (cur_area > max_area) {
-                max_area = cur_area;
-            }
+    // Using iterators rather than indicies, skips checking self, skips reverse order repeats, still O(n^2), but less iterations
+    for (auto it1 = red_tiles.begin(); it1 != red_tiles.end(); ++it1) {
+        for (auto it2 = next(it1); it2 != red_tiles.end(); ++it2) {
+            unsigned long long cur_area = area(*it1, *it2);
+            //cout << "DEBUG: " << it1->x << "," << it1->y << " * " << it2->x << "," << it2->y << " = " << cur_area << "\n";
+            max_area = max(max_area, cur_area);
         }
     }
 
