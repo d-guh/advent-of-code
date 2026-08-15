@@ -1,12 +1,11 @@
 // Day 1: Secret Entrance, Part 2
 
-use std::error::Error;
 use std::fs;
 
 const FILE_PATH: &str = "../.input";
 const DIAL_SIZE: i32 = 100;
 
-fn main() -> Result<(), Box<dyn Error>> {
+fn main() {
     let mut position: i32 = 50;
     let mut password: i32 = 0;
 
@@ -14,9 +13,9 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     for line in contents.lines() {
         //println!("DEBUG: line: {}", line);
-        //let direction: char = line[..1].parse()?;  // Slightly more robust?
+        //let direction: char = line[..1].parse().unwrap();
         let direction: char = line.as_bytes()[0] as char;  // Technically faster! (assumes correct encoding)
-        let magnitude: i32 = line[1..].parse()?;
+        let magnitude: i32 = line[1..].parse().unwrap();
         //println!("DEBUG: dir: {} mag: {}", direction, magnitude);
 
         //print!("DEBUG: {}", position);  // DEBUG GROUP1 PT1
@@ -55,5 +54,4 @@ fn main() -> Result<(), Box<dyn Error>> {
     }
 
     println!("Password: {}", password);  // ANSWER: 5815
-    Ok(())
 }
