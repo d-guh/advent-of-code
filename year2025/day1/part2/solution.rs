@@ -43,8 +43,8 @@ fn main() -> Result<(), Box<dyn Error>> {
         position = position.rem_euclid(DIAL_SIZE);
         
         // NOTE: rem_euclid is equivalent to replacing the above match with:
-        // 'L' => position = ((position - magnitude) % 100 + 100) % 100,
-        // 'R' => position = (position + magnitude) % 100,
+        //'L' => position = ((position - magnitude) % 100 + 100) % 100,
+        //'R' => position = (position + magnitude) % 100,
 
         // Calculate number of times passing zero (includes landing)
         if magnitude >= dist_to_zero {

@@ -39,7 +39,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         // Slightly less efficient, helps prevent integer flow issues
         position %= DIAL_SIZE;
         if position == 0 {
-            password += 1
+            password += 1;
         }
 
         // Choice 3: .rem_euclid (euclidean remainder)
@@ -53,12 +53,12 @@ fn main() -> Result<(), Box<dyn Error>> {
         // RECOMMENDED FOR DEBUG/VISUALS
         //position = position.rem_euclid(DIAL_SIZE);
         //if position == 0 {
-        //    password += 1
+        //    password += 1;
         //}
 
         // NOTE: rem_euclid is equivalent to replacing the above match with:
-        // 'L' => position = ((position - magnitude) % 100 + 100) % 100,
-        // 'R' => position = (position + magnitude) % 100,
+        //'L' => position = ((position - magnitude) % 100 + 100) % 100,
+        //'R' => position = (position + magnitude) % 100,
 
         //println!(" -> {} -> {}", line, position);  // DEBUG GROUP1 PT2
     }
