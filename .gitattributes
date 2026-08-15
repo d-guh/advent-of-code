@@ -1,0 +1,22 @@
+# Global Line Endings
+* text=auto eol=lf
+# Force all files LF, mainly for Windows/WSL reading input files
+
+# Specific Text Formats
+#*.rs    text eol=lf
+#*.toml  text eol=lf
+#*.env   text eol=lf
+#*.md    text eol=lf
+
+# Build/Binaries
+*.out   binary
+*.exe   binary
+*.dll   binary
+*.pdb   binary
+*.so    binary
+*.a     binary
+
+# Other Non-Text Formats
+*.jpg -text
+*.png -text
+*.pdf binary

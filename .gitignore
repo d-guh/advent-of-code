@@ -39,10 +39,11 @@ Desktop.ini
 # Build / Output
 ########################
 # Generic build outputs
-build/
-dist/
+#build/
+#dist/
 out/
 output/
+#bin/
 
 # Compiled objects / binaries
 *.o
@@ -55,20 +56,22 @@ output/
 *.dylib
 *.a
 *.lib
+*.pdb
 
 ########################
 # Temp / Cache
 ########################
 # Temp files
-.tmp
-.temp
 tmp
 temp
-*.tmp
-*.temp
+.tmp
+.temp
+tmp.*
 temp.*
 .tmp.*
 .temp.*
+*.tmp
+*.temp
 
 # Logs
 *.log
@@ -78,24 +81,20 @@ temp.*
 ########################
 .env
 .env.*
+*.env
 !.env.example
 
 ########################
 # Archives
 ########################
-*.zip
-*.tar
-*.tar.gz
-*.7z
+#*.zip
+#*.tar
+#*.tar.gz
+#*.7z
 
 ########################
 # Custom
 ########################
-# Project/language specific stuff here as needed
-# Python
-__pycache__/
-
+# Project/language specific ignores here as needed
 # Rust
-debug/
-target/
-*.pdb
+#target/
