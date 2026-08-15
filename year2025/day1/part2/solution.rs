@@ -14,7 +14,8 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     for line in contents.lines() {
         //println!("DEBUG: line: {}", line);
-        let direction: char = line[..1].parse()?;
+        //let direction: char = line[..1].parse()?;  // Slightly more robust?
+        let direction: char = line.as_bytes()[0] as char;  // Technically faster! (assumes correct encoding)
         let magnitude: i32 = line[1..].parse()?;
         //println!("DEBUG: dir: {} mag: {}", direction, magnitude);
 

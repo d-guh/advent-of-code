@@ -14,7 +14,8 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     for line in contents.lines() {
         //println!("DEBUG: line: {}", line);
-        let direction: char = line[..1].parse()?;
+        //let direction: char = line[..1].parse()?;  // Slightly more robust?
+        let direction: char = line.as_bytes()[0] as char;  // Technically faster! (assumes correct encoding)
         let magnitude: i32 = line[1..].parse()?;
         //println!("DEBUG: dir: {} mag: {}", direction, magnitude);
 
@@ -30,16 +31,16 @@ fn main() -> Result<(), Box<dyn Error>> {
 
         // Choice 1: % (remainder)
         // Most efficient, but you have to be careful about integer underflow/overflow
-        if (position % DIAL_SIZE) == 0 {
-            password += 1;
-        }
+        //if (position % DIAL_SIZE) == 0 {
+        //    password += 1;
+        //}
 
         // Choice 2: %= (remainder & assignment)
         // Slightly less efficient, helps prevent integer flow issues
-        //position %= DIAL_SIZE;
-        //if position == 0 {
-        //    password += 1
-        //}
+        position %= DIAL_SIZE;
+        if position == 0 {
+            password += 1
+        }
 
         // Choice 3: .rem_euclid (euclidean remainder)
         // Less efficient, but clamps to "real" positive values, has integer flow issues
