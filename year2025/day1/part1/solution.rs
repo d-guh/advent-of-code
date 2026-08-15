@@ -44,7 +44,12 @@ fn main() -> Result<(), Box<dyn Error>> {
 
         // Choice 3: .rem_euclid (euclidean remainder)
         // Less efficient, but clamps to "real" positive values, has integer flow issues
+        // NOT RECOMMENDED (this is a bit wasteful)
         //if (position.rem_euclid(DIAL_SIZE)) == 0 {
+        //    password += 1;
+        //}
+        // NOTE: this is equivalent to:
+        //if ((position % DIAL_SIZE) + DIAL_SIZE) % DIAL_SIZE == 0 {
         //    password += 1;
         //}
 
@@ -55,8 +60,12 @@ fn main() -> Result<(), Box<dyn Error>> {
         //if position == 0 {
         //    password += 1;
         //}
-
-        // NOTE: rem_euclid is equivalent to replacing the above match with:
+        // NOTE: position = position.rem_euclid(DIAL_SIZE); is equivalent to:
+        //position = ((position % DIAL_SIZE) + DIAL_SIZE) % DIAL_SIZE;
+        // OR: can also be written as:
+        //position %= DIAL_SIZE;
+        //if (position < 0) position += DIAL_SIZE;
+        // OR: replacing the above match handles with:
         //'L' => position = ((position - magnitude) % 100 + 100) % 100,
         //'R' => position = (position + magnitude) % 100,
 
