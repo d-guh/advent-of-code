@@ -58,6 +58,6 @@ fn main() -> Result<(), Box<dyn Error>> {
         //println!(" -> {} -> {}", line, position);  // DEBUG GROUP1 PT2
     }
 
-    println!("Password: {}", password);
+    println!("Password: {}", password);  // ANSWER: 1018
     Ok(())
 }
