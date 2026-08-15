@@ -1,32 +1,48 @@
 #!/usr/bin/env python3
 # Day 1: Secret Entrance, Part 2
 
+import sys
+
 FILE_PATH = "../.input"
+DIAL_SIZE = 100
 
 def main():
     position = 50
-    count = 0
+    password = 0
 
-    with open(FILE_PATH, 'r') as rotations_file:
-        for line in rotations_file:
-            direction = line[0]
-            value = int(line[1:])
-            # This works but is slow due to 2D for loop w/ comparisons, see if better math trick or something
-            for _ in range(value):
-                match direction:
-                    case 'L':
-                        position -= 1
-                    case 'R':
-                        position += 1
-                    case _:
-                        print(f"How did you get here? (skipping {line.strip()})")
-                        continue
+    contents = open(FILE_PATH, "r")
 
-                position %= 100
-                count += (position == 0)
-            #print(f"DEBUG: {position}")
+    for line in contents:
+        line = line.strip()
+        #print(f"DEBUG: line: {line}")
+        direction = line[0]
+        magnitude = int(line[1:])
+        #print(f"DEBUG: dir: {direction} mag: {magnitude}")
 
-    print(f"Final count: {count}")
+        #print(f"DEBUG: {position}", end="")  # DEBUG GROUP1 PT1
+        match direction:
+            case 'L':
+                dist_to_zero = DIAL_SIZE if position == 0 else position
+                position = (position - magnitude) % DIAL_SIZE
+            case 'R':
+                dist_to_zero = DIAL_SIZE if position == 0 else DIAL_SIZE - position
+                position = (position + magnitude) % DIAL_SIZE
+            case _:
+                print(f"Invalid direction: (skipping {line})", file=sys.stderr)
+                continue
+
+            # NOTE: The '%' operator in Python returns the Euclidean remainder
+            # unlike other languages, that compute truncated remainder
+
+        if (magnitude >= dist_to_zero):
+            password += 1 + (magnitude - dist_to_zero) // DIAL_SIZE
+
+        # NOTE: The '//' operator in python performs floor division
+        # unlike other languages, which do this by default
+
+        #print(f" -> {line} -> {position}")  # DEBUG GROUP1 PT2
+
+    print(f"Password: {password}")  # ANSWER: 5815
 
 if __name__ == "__main__":
     main()
