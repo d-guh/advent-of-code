@@ -1,33 +1,52 @@
 #!/usr/bin/env python3
 # Day 1: Secret Entrance, Part 1
 
+import sys
+
 FILE_PATH = "../.input"
+DIAL_SIZE = 100
 
 def main():
     position = 50
-    count = 0
+    password = 0
 
-    with open(FILE_PATH, 'r') as rotations_file:
-        for line in rotations_file:
-            direction = line[0]
-            value = int(line[1:])
+    contents = open(FILE_PATH, "r")
 
-            match direction:
-                case 'L':
-                    position -= value
-                    #print(f"DEBUG: {line.strip()}: {position}")
-                case 'R':
-                    position += value
-                    #print(f"DEBUG: {line.strip()}: {position}")
-                case _:
-                    print(f"How did you get here? (skipping {line.strip()})")
-                    continue
+    for line in contents:
+        line = line.strip()
+        #print(f"DEBUG: line: {line}")
+        direction = line[0]
+        magnitude = int(line[1:])
+        #print(f"DEBUG: dir: {direction} mag: {magnitude}")
 
-            position %= 100  # Calculates actual position
-            count += (position == 0)  # Funny bool moment
-            #print(f"DEBUG: {position}")
+        #print(f"DEBUG: {position}", end="")  # DEBUG GROUP1 PT1
+        match direction:
+            case 'L':
+                position -= magnitude
+            case 'R':
+                position += magnitude
+            case _:
+                print(f"Invalid direction: (skipping {line})", file=sys.stderr)
+                continue
 
-    print(f"Final count: {count}")
+        # Choice 1: % (euclidean remainder)
+        # Most efficient, but you have to be careful about integer underflow/overflow
+        #if (position % DIAL_SIZE) == 0:
+        #    password += 1
+
+        # Choice 2: %= (euclidean remainder & assignment)
+        # Slightly less efficient, helps prevent integer flow issues
+        # RECOMMENDED FOR DEBUG/VISUALS
+        position %= DIAL_SIZE
+        if position == 0:
+            password += 1
+
+        # NOTE: The '%' operator in Python returns the Euclidean remainder
+        # unlike other languages, that compute truncated remainder
+
+        #print(f" -> {line} -> {position}")  # DEBUG GROUP1 PT2
+
+    print(f"Password: {password}")  # ANSWER: 1018
 
 if __name__ == "__main__":
     main()
