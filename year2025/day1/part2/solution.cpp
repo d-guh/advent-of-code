@@ -1,42 +1,52 @@
 // Day 1: Secret Entrance, Part 2
 
 #include <iostream>
-#include <string>
 #include <fstream>
+#include <string>
 
 using namespace std;
 
-const string FILE_PATH = "../.input";
+static const char* FILE_PATH = "../.input";
+static const int DIAL_SIZE = 100;
 
 int main() {
     int position = 50;
-    int count = 0;
+    int password = 0;
 
-    ifstream rotations_file(FILE_PATH);
+    ifstream contents(FILE_PATH);
     string line;
-    while (getline(rotations_file, line)) {
+
+    while (getline(contents, line)) {
+        //cout << "DEBUG: line: " << line << "\n";
         char direction = line[0];
-        int value = stoi(line.substr(1));
-        // This works but is slow due to 2D for loop w/ comparisons, see if better way using math trick?
-        for (int i = 0; i < value; ++i) {
-            switch (direction) {
-                case 'L':
-                    position -= 1;
-                    break;
-                case 'R':
-                    position += 1;
-                    break;
-                default:
-                    cout << "How did you get here? (skipping " << line << ")" << endl;
-                    continue;
-            }
-            position %= 100;  // Actual position
-            count += (position == 0);  // Bool trick
+        int magnitude = stoi(line.substr(1));
+        //cout << "DEBUG: dir: " << direction << " mag: " << magnitude << "\n";
+
+        //cout << "DEBUG: " << position;  // DEBUG GROUP1 PT1
+        int dist_to_zero;
+        switch (direction) {
+            case 'L':
+                if (position == 0) { dist_to_zero = DIAL_SIZE; } else { dist_to_zero = position; }
+                position = ((position - magnitude) % 100 + 100) % 100;
+                break;
+            case 'R':
+                if (position == 0) { dist_to_zero = DIAL_SIZE; } else { dist_to_zero = DIAL_SIZE - position; }
+                position = (position + magnitude) % 100;
+                break;
+            default:
+                cerr << "Invalid direction: (skipping " << line << ")\n";
+                continue;
         }
-        //cout << "DEBUG: " << position << endl;
+
+        // Calculate number of times passing zero (includes landing)
+        if (magnitude >= dist_to_zero) {
+            password += 1 + (magnitude - dist_to_zero) / DIAL_SIZE;
+        }
+
+        //cout << " -> " << line << " -> " << position << "\n";  // DEBUG GROUP1 PT2
     }
 
-    cout << "Final count: " << count << endl;
+    cout << "Password: " << password << endl;  // ANSWER: 5815
 
     return 0;
 }
