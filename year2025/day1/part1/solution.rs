@@ -28,13 +28,13 @@ fn main() {
             }
         }
 
-        // Choice 1: % (remainder)
+        // Choice 1: % (truncated remainder)
         // Most efficient, but you have to be careful about integer underflow/overflow
         //if (position % DIAL_SIZE) == 0 {
         //    password += 1;
         //}
 
-        // Choice 2: %= (remainder & assignment)
+        // Choice 2: %= (truncated remainder & assignment)
         // Slightly less efficient, helps prevent integer flow issues
         position %= DIAL_SIZE;
         if position == 0 {
