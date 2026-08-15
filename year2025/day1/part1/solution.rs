@@ -8,7 +8,7 @@ const DIAL_SIZE: i32 = 100;
 
 fn main() -> Result<(), Box<dyn Error>> {
     let mut position: i32 = 50;
-    let mut count: i32 = 0;
+    let mut password: i32 = 0;
 
     let contents: String = fs::read_to_string(FILE_PATH).expect("Unable to read file");
 
@@ -23,7 +23,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             'L' => position -= magnitude,
             'R' => position += magnitude,
             _ => {
-                eprintln!("How did you get here? (skipping {})", line);
+                eprintln!("Invalid direction: (skipping {})", line);
                 continue;
             }
         }
@@ -31,33 +31,33 @@ fn main() -> Result<(), Box<dyn Error>> {
         // Choice 1: % (remainder)
         // Most efficient, but you have to be careful about integer underflow/overflow
         if (position % DIAL_SIZE) == 0 {
-            count += 1;
+            password += 1;
         }
 
         // Choice 2: %= (remainder & assignment)
         // Slightly less efficient, helps prevent integer flow issues
         //position %= DIAL_SIZE;
         //if position == 0 {
-        //    count += 1
+        //    password += 1
         //}
 
         // Choice 3: .rem_euclid (euclidean remainder)
-        // Less efficient, but clamps to real positive values, has integer flow issues
+        // Less efficient, but clamps to "real" positive values, has integer flow issues
         //if (position.rem_euclid(DIAL_SIZE)) == 0 {
-        //    count += 1;
+        //    password += 1;
         //}
 
         // Choice 4: =.rem_euclid (euclidean remainder & assignment)
-        // Least efficient, but real positional record, helps prevent integer flow issues
+        // Least efficient, but "real" positional record, helps prevent integer flow issues
         // RECOMMENDED FOR DEBUG/VISUALS
         //position = position.rem_euclid(DIAL_SIZE);
         //if position == 0 {
-        //    count += 1
+        //    password += 1
         //}
 
         //println!(" -> {} -> {}", line, position);  // DEBUG GROUP1 PT2
     }
 
-    println!("Final count (password): {}", count);
+    println!("Password: {}", password);
     Ok(())
 }
