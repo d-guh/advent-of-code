@@ -1,39 +1,46 @@
 // Day 1: Secret Entrance, Part 2
 
-use std::io::{self, BufRead};
-use std::fs::File;
+use std::error::Error;
+use std::fs;
 
 const FILE_PATH: &str = "../.input";
 
-// Result handling is much better than a bunch of expect calls
-fn main() -> Result<(), Box<dyn std::error::Error>> {
+fn main() -> Result<(), Box<dyn Error>> {
     let mut position: i32 = 50;
     let mut count: i32 = 0;
 
-    let file: File = File::open(FILE_PATH)?;
-    let reader: io::BufReader<File> = io::BufReader::new(file);
+    let contents: String = fs::read_to_string(FILE_PATH).expect("Unable to read file");
 
-    for line in reader.lines() {
-        let line: String = line?;
-        let direction: char = line.chars().next().unwrap_or(' ');
+    for line in contents.lines() {
+        // println!("DEBUG: line: {}", line);
+        let direction: char = line[..1].parse()?;
         let value: i32 = line[1..].parse()?;
 
-        // Slow 2D for loop shenanigans, see if math trick
-        for _ in 1..=value {
+        // VERY slow for loop, see if there's a math trick for this
+        for _ in 1..=value {  // 1 at a time up to value from file
             match direction {
-                'L' => position -= 1,
-                'R' => position += 1,
+                'L' => {
+                    position -= 1;
+                    // println!("DEBUG: {}: {}", line, position);
+                },
+                'R' => {
+                    position += 1;
+                    // println!("DEBUG: {}: {}", line, position);
+                },
                 _ => {
                     eprintln!("How did you get here? (skipping {})", line);
                     continue;
                 }
             }
-            position %= 100;  // Actual position
-            count += (position == 0) as i32;  // Bool trick + type hint
+
+            position %= 100;  // a bit slower due to reassignment, helps prevent over/underflow though
+            if position == 0 {
+                count += 1;
+            }
+            // println!("DEBUG: {}", position);
         }
-        // println!("DEBUG: {}", position);
     }
 
-    println!("Final count: {}", count);
+    println!("Final count (password): {}", count);
     Ok(())
 }
