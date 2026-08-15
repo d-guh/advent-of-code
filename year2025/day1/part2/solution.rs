@@ -29,7 +29,6 @@ fn main() -> Result<(), Box<dyn Error>> {
             }
         };
 
-        // PERF-TODO: Find some way to eliminate second match, though compiler likely optimizes this out
         match direction {
             'L' => position -= magnitude,
             'R' => position += magnitude,
@@ -42,10 +41,14 @@ fn main() -> Result<(), Box<dyn Error>> {
         // Euclidean remainder & assignment required in this part
         // We need the accurate "real" position to calculate dist_to_zero
         position = position.rem_euclid(DIAL_SIZE);
+        
+        // NOTE: rem_euclid is equivalent to replacing the above match with:
+        // 'L' => position = ((position - magnitude) % 100 + 100) % 100,
+        // 'R' => position = (position + magnitude) % 100,
 
         // Calculate number of times passing zero (includes landing)
         if magnitude >= dist_to_zero {
-            password += 1 + (magnitude - dist_to_zero) / 100;
+            password += 1 + (magnitude - dist_to_zero) / 100;  // 0-rounded division
         }
 
         //println!(" -> {} -> {}", line, position);  // DEBUG GROUP1 PT2

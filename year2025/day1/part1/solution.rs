@@ -56,6 +56,10 @@ fn main() -> Result<(), Box<dyn Error>> {
         //    password += 1
         //}
 
+        // NOTE: rem_euclid is equivalent to replacing the above match with:
+        // 'L' => position = ((position - magnitude) % 100 + 100) % 100,
+        // 'R' => position = (position + magnitude) % 100,
+
         //println!(" -> {} -> {}", line, position);  // DEBUG GROUP1 PT2
     }
 
