@@ -6,8 +6,8 @@
 
 using namespace std;
 
-static const char* FILE_PATH = "../.input";
-static const int DIAL_SIZE = 100;
+#define FILE_PATH "../.input"
+#define DIAL_SIZE 100
 
 int main() {
     int position = 50;
