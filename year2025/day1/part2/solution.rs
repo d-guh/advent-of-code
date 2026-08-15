@@ -4,43 +4,52 @@ use std::error::Error;
 use std::fs;
 
 const FILE_PATH: &str = "../.input";
+const DIAL_SIZE: i32 = 100;
 
 fn main() -> Result<(), Box<dyn Error>> {
     let mut position: i32 = 50;
-    let mut count: i32 = 0;
+    let mut password: i32 = 0;
 
     let contents: String = fs::read_to_string(FILE_PATH).expect("Unable to read file");
 
     for line in contents.lines() {
-        // println!("DEBUG: line: {}", line);
+        //println!("DEBUG: line: {}", line);
         let direction: char = line[..1].parse()?;
-        let value: i32 = line[1..].parse()?;
+        let magnitude: i32 = line[1..].parse()?;
+        //println!("DEBUG: dir: {} mag: {}", direction, magnitude);
 
-        // VERY slow for loop, see if there's a math trick for this
-        for _ in 1..=value {  // 1 at a time up to value from file
-            match direction {
-                'L' => {
-                    position -= 1;
-                    // println!("DEBUG: {}: {}", line, position);
-                },
-                'R' => {
-                    position += 1;
-                    // println!("DEBUG: {}: {}", line, position);
-                },
-                _ => {
-                    eprintln!("How did you get here? (skipping {})", line);
-                    continue;
-                }
+        //print!("DEBUG: {}", position);  // DEBUG GROUP1 PT1
+        let dist_to_zero: i32 = match direction {
+            'L' => if position == 0 { DIAL_SIZE } else { position },
+            'R' => if position == 0 { DIAL_SIZE } else { DIAL_SIZE - position },
+            _ => {
+                eprintln!("Invalid direction: (skipping {})", line);
+                continue;
             }
+        };
 
-            position %= 100;  // a bit slower due to reassignment, helps prevent over/underflow though
-            if position == 0 {
-                count += 1;
+        // PERF-TODO: Find some way to eliminate second match, though compiler likely optimizes this out
+        match direction {
+            'L' => position -= magnitude,
+            'R' => position += magnitude,
+            _ => {
+                eprintln!("Invalid direction: (skipping {})", line);
+                continue;
             }
-            // println!("DEBUG: {}", position);
         }
+
+        // Euclidean remainder & assignment required in this part
+        // We need the accurate "real" position to calculate dist_to_zero
+        position = position.rem_euclid(DIAL_SIZE);
+
+        // Calculate number of times passing zero (includes landing)
+        if magnitude >= dist_to_zero {
+            password += 1 + (magnitude - dist_to_zero) / 100;
+        }
+
+        //println!(" -> {} -> {}", line, position);  // DEBUG GROUP1 PT2
     }
 
-    println!("Final count (password): {}", count);
+    println!("Password: {}", password);  // ANSWER: 5815
     Ok(())
 }
